@@ -1,8 +1,13 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, Dimensions } from 'react-native';
 import { Card, CardItem, Text } from 'native-base';
 
-export default function MyCard({ text, color, image }) {
+import FlipCard from 'react-native-flip-card'
+
+const CARD_HEIGHT = Dimensions.get('window').height * .8;
+const CARD_WIDTH = Dimensions.get('window').width * .9;
+
+export default function MyCard({ description, color, image }) {
   const styles = StyleSheet.create({
     card: {
       flex: 1,
@@ -10,32 +15,43 @@ export default function MyCard({ text, color, image }) {
       borderRadius: 16,
       alignItems: 'center',
       justifyContent: 'center',
-      width: 300,
+      borderColor: 'transparent',
       alignSelf: 'center',
-      height: 400,
+      height: CARD_HEIGHT,
+      width: CARD_WIDTH,
     },
     cardBody: {
       backgroundColor: 'transparent',
     },
+    backSide: {
+      alignSelf: 'center',
+      backgroundColor: 'white',
+    },
     text: {
-      color: 'white',
       fontSize: 44,
       fontWeight: 'bold',
     },
     image: {
       borderRadius: 16,
-      width: 300,
-      height: 400,
+      height: CARD_HEIGHT,
+      width: CARD_WIDTH,
     },
   });
   return (
-    <Card style={styles.card}>
+    <FlipCard
+      style={styles.card}
+      friction={10}
+      perspective={500}
+      flipHorizontal={true}
+      flipVertical={false}
+      onFlipped={(isFlipped)=>{console.log('isFlipped', isFlipped)}}
+      >
       <CardItem cardBody style={styles.cardBody}>
-          {image ?
-            <Image source={image} style={styles.image}/> :
-            <Text style={styles.text}>{text}</Text>
-          }
+          <Image resizeMode="contain" source={image} style={styles.image}/>
       </CardItem>
-    </Card>
+      <CardItem cardBody style={[styles.card, styles.backSide]}>
+          <Text>Back of card</Text>
+      </CardItem>
+    </FlipCard>
   );
 }
