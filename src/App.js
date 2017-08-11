@@ -1,9 +1,47 @@
 import React from 'react';
-import HomeScreen from './HomeScreen';
-import StackScreen from './StackScreen';
-import { StackNavigator } from 'react-navigation';
+import GroupScreen from './GroupScreen';
+import CardScreen from './CardScreen';
+import GroupSelectScreen from './GroupSelectScreen';
+import CardSelectScreen from './CardSelectScreen';
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
+
+/**
+ * Nested Stack and Drawer navigation
+ * See @corephillip's answer on https://github.com/react-community/react-navigation/issues/131
+ **/
+
+const StackRoutes = {
+	GroupSelectScreen: {
+		screen: GroupSelectScreen
+	},
+	CardSelectScreen: {
+		screen: CardSelectScreen
+	},
+  CardScreen: {
+    screen: CardScreen
+  },
+  GroupScreen: {
+    screen: GroupScreen
+  }
+};
+
+const DrawerRoutes = {
+  GroupSelectStack: {
+    name: 'GroupSelectStack',
+    screen: StackNavigator(StackRoutes, { initialRouteName:'GroupSelectScreen' }),
+  },
+  CardSelectStack: {
+    name: 'CardSelectStack',
+    screen: StackNavigator(StackRoutes, { initialRouteName:'CardSelectScreen' }),
+  },
+}
 
 export default StackNavigator({
-  Home: { screen: HomeScreen },
-  StackScreen: { path: 'stack/:name', screen: StackScreen }
+  Drawer: {
+    name: 'Drawer',
+    screen: DrawerNavigator(DrawerRoutes, { drawerWidth: 250 })
+  },
+  ...StackRoutes
+}, {
+  headerMode: 'none', // Hide double header
 });

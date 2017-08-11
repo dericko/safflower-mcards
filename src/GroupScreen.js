@@ -5,7 +5,7 @@ import { View } from 'native-base';
 import Swiper from './Swiper';
 import MyCard from './MyCard';
 
-export default class StackScreen extends React.Component {
+export default class GroupScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.name,
   });

@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import { Container, Text, Button } from 'native-base';
-import { config } from './assets';
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -9,21 +8,19 @@ const MARGIN = WINDOW_WIDTH * .04;
 const HEIGHT = (WINDOW_HEIGHT / 4) - MARGIN;
 const WIDTH = (WINDOW_HEIGHT / 6) - MARGIN / 2;
 
-export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Home',
-  };
+export default class Grid extends React.Component {
   render() {
-    const { stacks } = config;
+    const { items, childScreen } = this.props;
+    console.log('items', items)
     return (
       <Container style={styles.container}>
-        {stacks.map(({name, stack}) =>
+        {items.map((item, i) =>
           <Button
             center
-            key={name}
-            style={[{ backgroundColor: 'rgb(134, 176, 255)'}, styles.stack]}
-            onPress={() => this.props.navigation.navigate('StackScreen', { name: name, stack: stack })}>
-            <Text style={styles.text}>{name}</Text>
+            key={i}
+            style={[{ backgroundColor: 'rgb(134, 176, 255)'}, styles.item]}
+            onPress={() => this.props.onSelectItem(item)}>
+            <Text style={styles.text}>{item.name || '{title}'}</Text>
           </Button>
         )}
       </Container>
@@ -42,7 +39,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: HEIGHT / 10,
   },
-  stack: {
+  item: {
     height: HEIGHT,
     width: WIDTH,
     marginTop: MARGIN,
