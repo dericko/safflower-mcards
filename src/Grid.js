@@ -11,7 +11,6 @@ const WIDTH = (WINDOW_HEIGHT / 6) - MARGIN / 2;
 export default class Grid extends React.Component {
   render() {
     const { items, childScreen } = this.props;
-    console.log('items', items)
     return (
       <Container style={styles.container}>
         {items.map((item, i) =>
