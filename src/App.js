@@ -1,6 +1,7 @@
 import React from 'react';
 import GroupScreen from './GroupScreen';
 import CardScreen from './CardScreen';
+import SingleCardScreen from './SingleCardScreen';
 import GroupSelectScreen from './GroupSelectScreen';
 import CardSelectScreen from './CardSelectScreen';
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
@@ -17,15 +18,22 @@ const StackRoutes = {
 	CardSelectScreen: {
 		screen: CardSelectScreen
 	},
+	SingleCardScreen: {
+		screen: SingleCardScreen
+	},
   CardScreen: {
     screen: CardScreen
   },
   GroupScreen: {
     screen: GroupScreen
-  }
+  },
 };
 
 const DrawerRoutes = {
+	SingleCardStack: {
+		name: 'SingleCardStack',
+		screen: StackNavigator(StackRoutes, { initialRouteName:'SingleCardScreen'})
+	},
   GroupSelectStack: {
     name: 'GroupSelectStack',
     screen: StackNavigator(StackRoutes, { initialRouteName:'GroupSelectScreen' }),
