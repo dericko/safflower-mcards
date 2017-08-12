@@ -31,7 +31,10 @@ export default function MyCard({ image }) {
   return (
     <Card style={styles.cardFront}>
       <Image
-        resizeMode="contain" style={styles.image} source={image}/>
+        resizeMode="contain"
+        style={styles.image}
+        source={image}
+      />
     </Card>
   )
   // return (

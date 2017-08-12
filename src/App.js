@@ -6,10 +6,10 @@ import GroupSelectScreen from './GroupSelectScreen';
 import CardSelectScreen from './CardSelectScreen';
 import { DrawerNavigator, StackNavigator } from 'react-navigation';
 
-/**
+/*
  * Nested Stack and Drawer navigation
  * See @corephillip's answer on https://github.com/react-community/react-navigation/issues/131
- **/
+ */
 
 const StackRoutes = {
 	GroupSelectScreen: {
@@ -30,18 +30,18 @@ const StackRoutes = {
 };
 
 const DrawerRoutes = {
-	SingleCardStack: {
-		name: 'SingleCardStack',
-		screen: StackNavigator(StackRoutes, { initialRouteName:'SingleCardScreen'})
-	},
-  GroupSelectStack: {
-    name: 'GroupSelectStack',
-    screen: StackNavigator(StackRoutes, { initialRouteName:'GroupSelectScreen' }),
-  },
   CardSelectStack: {
     name: 'CardSelectStack',
     screen: StackNavigator(StackRoutes, { initialRouteName:'CardSelectScreen' }),
   },
+  GroupSelectStack: {
+    name: 'GroupSelectStack',
+    screen: StackNavigator(StackRoutes, { initialRouteName:'GroupSelectScreen' }),
+  },
+	SingleCardStack: {
+		name: 'SingleCardStack',
+		screen: StackNavigator(StackRoutes, { initialRouteName:'SingleCardScreen'})
+	},
 }
 
 export default StackNavigator({
