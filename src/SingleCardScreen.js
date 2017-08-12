@@ -1,13 +1,14 @@
 import React from 'react';
+import { Button } from 'react-native';
 import { deck } from './assets';
 import MyCard from './MyCard';
-import { Button } from 'react-native';
+import DrawerOpenIcon from './DrawerOpenIcon';
 
 export default class CardScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     drawerLabel: 'Pick a Card',
     title: 'Pick a Card',
-    headerLeft: <Button title="|=|" onPress={() => navigation.navigate('DrawerOpen')} />,
+    headerLeft: <DrawerOpenIcon navigation={navigation} />
   });
   randomCard = () => {
     const range = deck.length;
