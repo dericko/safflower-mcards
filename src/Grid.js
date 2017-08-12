@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
-import { Container, Text, Button } from 'native-base';
+import { StyleSheet, Dimensions, Image, TouchableHighlight, ListView } from 'react-native';
+import { Text, Button } from 'native-base';
 
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -8,21 +8,45 @@ const MARGIN = WINDOW_WIDTH * .04;
 const HEIGHT = (WINDOW_HEIGHT / 4) - MARGIN;
 const WIDTH = (WINDOW_HEIGHT / 6) - MARGIN / 2;
 
+/*
+ * A ListView with flexbox for grid
+ */
 export default class Grid extends React.Component {
-  render() {
-    const { items, childScreen } = this.props;
+  constructor(props) {
+    super();
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows(props.items),
+    }
+  }
+  renderPlaceholder(item) {
     return (
-      <Container style={styles.container}>
-        {items.map((item, i) =>
-          <Button
-            center
-            key={i}
-            style={[{ backgroundColor: 'rgb(134, 176, 255)'}, styles.item]}
+      <Button disabled light style={styles.placeholder}>
+        <Text style={styles.text}>{item.name}</Text>
+      </Button>
+    );
+  }
+  renderImage(image) {
+    return (
+      <Image
+        style={styles.image}
+        resizeMode="stretch"
+        source={image}
+      />
+    );
+  }
+  render() {
+    return (
+      <ListView contentContainerStyle={styles.container}
+        dataSource={this.state.dataSource}
+        renderRow={(item) =>
+          <TouchableHighlight
+            style={styles.item}
             onPress={() => this.props.onSelectItem(item)}>
-            <Text style={styles.text}>{item.name || '{title}'}</Text>
-          </Button>
-        )}
-      </Container>
+            {item.image ? this.renderImage(item.image) : this.renderPlaceholder(item) }
+          </TouchableHighlight>
+        }
+      />
     );
   }
 }
@@ -34,14 +58,23 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignContent: 'flex-start',
   },
-  text: {
-    textAlign: 'center',
-    fontSize: HEIGHT / 10,
-  },
   item: {
-    height: HEIGHT,
-    width: WIDTH,
+    borderRadius: 8,
     marginTop: MARGIN,
     marginLeft: MARGIN,
+  },
+  image: {
+    borderRadius: 8,
+    height: HEIGHT,
+    width: WIDTH,
+  },
+  text: {
+    textAlign: 'center',
+  },
+  placeholder: {
+    height: HEIGHT,
+    width: WIDTH,
+    flexDirection: 'column',
+    justifyContent: 'center',
   }
 });
